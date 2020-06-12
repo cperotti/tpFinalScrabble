@@ -32,7 +32,8 @@ def accionTablero(window,event,listaCoordenadas,letraElegida,matriz):
 	matriz[x][y] = letraElegida
 	return listaCoordenadas
 	
-def armarPalabra(listaCoordenadas,matriz,unionLetras):
+def armarPalabra(listaCoordenadas,matriz):
+	unionLetras = []
 	listaCoordenadas.sort()
 	for lcoord in listaCoordenadas:
 		x= lcoord[0]
@@ -67,6 +68,8 @@ def devolverLetrasAtril(window,listaCoordenadas,matriz,atrilJ):
 			guardoLetrasTemporal.remove(valor)
 			window.FindElement("Letra" + str(indice)).Update(valor)
 	listaCoordenadas = []
+	unionLetras = []
+	print(listaCoordenadas)
 	return atrilJ	
 
 def main(args):  
@@ -113,7 +116,7 @@ def main(args):
 	matriz=[]
 	esValida = False
 	
-	unionLetras = []
+	#unionLetras = []
 	atrilJ = jugadorJ._atril
   
 	for i in range (15):
@@ -144,6 +147,7 @@ def main(args):
 			letraElegida = accionAtril(window,atrilJ,6,event)
 	  
 		if type(event) is tuple:
+			print('tamaño lista coordenadas ', len(listaCoordenadas))
 			if len(listaCoordenadas) == 0:
 				listaCoordenadas = accionTablero(window,event,listaCoordenadas,letraElegida,matriz)
 			else:
@@ -157,7 +161,7 @@ def main(args):
 						print('va por vertcal',listaCoordenadas)	
 		  
 		if event == 'insertar':
-			palabra = armarPalabra(listaCoordenadas,matriz,unionLetras)
+			palabra = armarPalabra(listaCoordenadas,matriz)
 			print('palabra ',palabra)
 			print('voy a analizar la palabra')
 			esValida = ppattern.analizarPalabra(palabra, esValida)
@@ -171,6 +175,8 @@ def main(args):
 					nuevo_puntaje= nuevo_puntaje+puntos[letra]
 					jugadorJ.set_puntaje(nuevo_puntaje)
 				window["puntosJug"].update(nuevo_puntaje)
+				listaCoordenadas = []
+				print(listaCoordenadas)
 			else:
 				devolverLetrasAtril(window,listaCoordenadas,matriz,atrilJ)
 											
